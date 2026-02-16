@@ -1,0 +1,60 @@
+{
+	"mpris": {
+		// "player":
+		// "ignored-players":
+		// "interval":
+		"format": "{title} - {artist}",
+		"format-paused": "{title} - {artist}",
+		"format-stopped": "",
+		"tooltip-format": "Playing: {title} - {artist}",
+		"tooltip-format-paused": "Paused: {title} - {artist}",
+		// "enable-tooltip-len-limits":
+		"on-click": "omarchy-launch-or-focus spotify",
+		// "on-click-middle":
+		// "on-click-right":
+		"player-icons": {
+			"default": "󰐊"
+		},
+		"status-icons": {
+			"paused": "󰏤"
+		},
+		// "artist-len":
+		// "album-len":
+		// "title-len":
+		// "dynamic-len":
+		// "dynamic-order":
+		// "dynamic-separator":
+		// "dynamic-importance-order":
+		// "truncate-hours":
+		// "ellipsis":
+		// "rotate":
+		// "min-length":
+		"max-length": 40,
+		// "align":
+		// "justify":
+		// "expand":
+		"on-scroll-up": "playerctl next",
+		"on-scroll-down": "playerctl previous"
+	},
+
+	"custom/mpris-prev": {
+		"exec": "playerctl status 2>/dev/null | grep -qE 'Playing|Paused' && echo '󰒮' || echo ''",
+		"interval": 2,
+		"on-click": "playerctl previous",
+		"tooltip": false
+	},
+
+	"custom/mpris-play": {
+		"exec": "status=$(playerctl status 2>/dev/null); if [ \"$status\" = 'Playing' ]; then echo '󰏤'; elif [ \"$status\" = 'Paused' ]; then echo '󰐊'; fi",
+		"interval": 2,
+		"on-click": "playerctl play-pause",
+		"tooltip": false
+	},
+
+	"custom/mpris-next": {
+		"exec": "playerctl status 2>/dev/null | grep -qE 'Playing|Paused' && echo '󰒭' || echo ''",
+		"interval": 2,
+		"on-click": "playerctl next",
+		"tooltip": false
+	}
+}

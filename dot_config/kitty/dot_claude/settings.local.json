@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(omarchy-theme-current)",
+      "Bash(omarchy-restart-terminal)",
+      "Bash(compgen:*)",
+      "Bash(yay -Ss:*)",
+      "Bash(yay -S:*)",
+      "Bash(hyprctl clients:*)",
+      "Bash(hyprctl reload:*)",
+      "Bash(omarchy-restart-waybar:*)",
+      "Bash(hyprctl keyword:*)",
+      "Bash(hyprctl version:*)"
+    ]
+  }
+}

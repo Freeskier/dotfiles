@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Update kitty cursor color to match theme accent
+
+COLORS_FILE="$HOME/.config/omarchy/current/theme/colors.toml"
+KITTY_CONF="$HOME/.config/kitty/kitty.conf"
+
+if [[ -f "$COLORS_FILE" && -f "$KITTY_CONF" ]]; then
+    accent=$(grep '^accent' "$COLORS_FILE" | cut -d'"' -f2)
+    background=$(grep '^background' "$COLORS_FILE" | cut -d'"' -f2)
+
+    if [[ -n "$accent" && -n "$background" ]]; then
+        sed -i "s/^cursor #.*/cursor $accent/" "$KITTY_CONF"
+        sed -i "s/^cursor_text_color #.*/cursor_text_color $background/" "$KITTY_CONF"
+    fi
+fi
