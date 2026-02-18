@@ -38,22 +38,21 @@
 	},
 
 	"custom/mpris-prev": {
-		"exec": "playerctl status 2>/dev/null | grep -qE 'Playing|Paused' && echo '󰒮' || echo ''",
-		"interval": 2,
+		"format": "󰒮",
 		"on-click": "playerctl previous",
 		"tooltip": false
 	},
 
 	"custom/mpris-play": {
-		"exec": "status=$(playerctl status 2>/dev/null); if [ \"$status\" = 'Playing' ]; then echo '󰏤'; elif [ \"$status\" = 'Paused' ]; then echo '󰐊'; fi",
-		"interval": 2,
-		"on-click": "playerctl play-pause",
+		"exec": "~/.config/waybar/scripts/mpris-play.sh",
+		"interval": 1,
+		"signal": 11,
+		"on-click": "~/.config/waybar/scripts/mpris-toggle.sh",
 		"tooltip": false
 	},
 
 	"custom/mpris-next": {
-		"exec": "playerctl status 2>/dev/null | grep -qE 'Playing|Paused' && echo '󰒭' || echo ''",
-		"interval": 2,
+		"format": "󰒭",
 		"on-click": "playerctl next",
 		"tooltip": false
 	}

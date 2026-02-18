@@ -15,9 +15,19 @@ FG_RED="\e[31m"
 FG_RESET="\e[39m"
 
 TIMEOUT=10
+SCAN_STARTED=false
 
 printf() {
 	command printf "$@" >&2
+}
+
+cleanup() {
+	if [[ $SCAN_STARTED == true ]]; then
+		bluetoothctl scan off > /dev/null 2>&1 || true
+	fi
+
+	# make cursor visible
+	command printf "\e[?25h" >&2
 }
 
 power_on() {
@@ -61,6 +71,7 @@ power_on() {
 
 get_devices() {
 	bluetoothctl -t $TIMEOUT scan on > /dev/null &
+	SCAN_STARTED=true
 
 	local num
 
@@ -146,14 +157,13 @@ pair_and_connect() {
 }
 
 main() {
+	trap cleanup EXIT INT TERM
+
 	# make cursor invisible
 	printf "\e[?25l"
 
 	power_on
 	get_devices
-
-	# make cursor visible
-	printf "\e[?25h"
 
 	select_device
 	pair_and_connect

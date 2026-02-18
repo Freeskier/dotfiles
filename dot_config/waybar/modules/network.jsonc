@@ -21,15 +21,15 @@
 		// "justify":
 		"on-click": "omarchy-launch-or-focus-tui impala",
 		// "on-click-middle":
-		"on-click-right": "nmcli radio wifi off && notify-send 'Wi-Fi Disabled' -i 'network-wireless-off' -h string:x-canonical-private-synchronous:network",
+		"on-click-right": "~/.config/waybar/scripts/network-toggle.sh",
 		// "on-update":
 		// "on-scroll-up":
 		// "on-scroll-down":
 		// "smooth-scrolling-threshold":
 		// "tooltip":
-		"tooltip-format": "<b>Gateway</b>: {gwaddr}",
-		"tooltip-format-ethernet": "<b>Interface</b>: {ifname}",
-		"tooltip-format-wifi": "<b>Network</b>: {essid}\n<b>IP Addr</b>: {ipaddr}/{cidr}\n<b>Strength</b>: {signalStrength}%\n<b>Frequency</b>: {frequency} GHz",
+			"tooltip-format": "<b>Interface</b>: {ifname}\n<b>Gateway</b>: {gwaddr}\n<b>Down</b>: {bandwidthDownBytes}\n<b>Up</b>: {bandwidthUpBytes}",
+			"tooltip-format-ethernet": "<b>Ethernet</b>\n<b>Interface</b>: {ifname}\n<b>IP Addr</b>: {ipaddr}/{cidr}\n<b>Gateway</b>: {gwaddr}\n<b>Down</b>: {bandwidthDownBytes}\n<b>Up</b>: {bandwidthUpBytes}",
+			"tooltip-format-wifi": "<b>Wi-Fi</b>: {essid}\n<b>Interface</b>: {ifname}\n<b>IP Addr</b>: {ipaddr}/{cidr}\n<b>Gateway</b>: {gwaddr}\n<b>Strength</b>: {signalStrength}%\n<b>Frequency</b>: {frequency} GHz\n<b>Down</b>: {bandwidthDownBytes}\n<b>Up</b>: {bandwidthUpBytes}",
 		"tooltip-format-disconnected": "Wi-Fi Disconnected",
 		"tooltip-format-disabled": "Wi-Fi Disabled"
 		// "menu":

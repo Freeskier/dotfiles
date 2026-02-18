@@ -54,9 +54,9 @@ main() {
 			brightnessctl -n set "${value}%${sign}" > /dev/null
 
 			local level
-			level=$(brightnessctl -m | awk -F ',' '{print $4}')
+			level=$(brightnessctl -m | awk -F ',' '{print $4}' | tr -d '%')
 
-			notify-send "Brightness: $level" -h int:value:"$level" -i \
+			notify-send "Brightness: ${level}%" -h int:value:"$level" -i \
 				"contrast" -h string:x-canonical-private-synchronous:backlight
 			;;
 		*)

@@ -69,15 +69,28 @@ check_updates() {
 }
 
 update_packages() {
-	printf "%bUpdating pacman packages...%b\n" "$FG_BLUE" "$FG_RESET"
-	sudo pacman -Syu
+	local failed=false
 
-	if [[ -n $HELPER ]]; then
-		printf "\n%bUpdating AUR packages...%b\n" "$FG_BLUE" "$FG_RESET"
-		command "$HELPER" -Syu
+	printf "%bUpdating pacman packages...%b\n" "$FG_BLUE" "$FG_RESET"
+	if ! sudo pacman -Syu; then
+		failed=true
 	fi
 
-	notify-send "Update Complete" -i "package-install"
+	if [[ -n $HELPER && $failed == false ]]; then
+		printf "\n%bUpdating AUR packages...%b\n" "$FG_BLUE" "$FG_RESET"
+		if ! command "$HELPER" -Syu; then
+			failed=true
+		fi
+	fi
+
+	if [[ $failed == true ]]; then
+		notify-send "Update failed" -u critical -i "package-purge"
+		printf "\nUpdate failed.\n"
+		read -rsn 1 -p "Press any key to exit..."
+		return 1
+	fi
+
+	notify-send "Update complete" -i "package-install"
 
 	printf "\n%bUpdate Complete!%b\n" "$FG_GREEN" "$FG_RESET"
 	read -rsn 1 -p "Press any key to exit..."
@@ -112,8 +125,14 @@ main() {
 			;;
 		*)
 			printf "%bChecking for updates...%b\n" "$FG_BLUE" "$FG_RESET"
-			check_updates
-			update_packages
+			if ! check_updates; then
+				notify-send "Update check failed" -u critical -i "package-purge"
+				printf "Cannot fetch updates.\n"
+				return 1
+			fi
+			if ! update_packages; then
+				return 1
+			fi
 
 			# update the module
 			pkill -RTMIN+1 waybar
